@@ -1,5 +1,6 @@
-const generateLocation = (url) => {
+const generateLocation = (username, url) => {
     return {
+        username,
         "url": url,
         "createdAt" : new Date().getTime(),
     }

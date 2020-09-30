@@ -16,7 +16,7 @@
             <div id="messages" class="chat__messages"></div>
 
             <div class="compose">
-                    <input type="text" id="messageInput" placeholder="Message">
+                    <input type="text" id="messageInput" placeholder="Enter message" required autocomplete="off">
                     <button id="sendButton">Send</button>
                     <button id="send-location">Share Location</button>
             </div>
@@ -27,7 +27,7 @@
     <script id="message-template" type="text/html">
         <div class="message">
             <p>
-                <span class="message__name">Some User name</span>
+                <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{timestamp}}</span>
             </p>
             <p>{{message}}</p>
@@ -36,7 +36,7 @@
     <script id="location-template" type="text/html">
         <div class="message">
             <p>
-                <span class="message__name">Some User name</span>
+                <span class="message__name">{{username}}</span>
                 <span class="message__meta">{{timestamp}}</span>
             </p>
             <p><a href={{location}} target="_blank">My Current Location</p>
