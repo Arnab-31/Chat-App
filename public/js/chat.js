@@ -14,29 +14,59 @@ const sidebarTemplate = document.querySelector("#sidebar-template").innerHTML
 //Options
 const {username, room} = Qs.parse(location.search, {ignoreQueryPrefix: true} )
 
+// const autoscroll = () => {
+//     $messages.scrollTop = $messages.scrollHeight
+// }
+
+const autoscroll = () => {
+    // New message element
+    const $newMessage = $messages.lastElementChild
+
+    // Height of the new message
+    const newMessageStyles = getComputedStyle($newMessage)
+    const newMessageMargin = parseInt(newMessageStyles.marginBottom)
+    const newMessageHeight = $newMessage.offsetHeight + newMessageMargin
+
+    // Visible height
+    const visibleHeight = $messages.offsetHeight
+
+    // Height of messages container
+    const containerHeight = $messages.scrollHeight
+
+    // How far have I scrolled?
+    const scrollOffset = $messages.scrollTop + visibleHeight
+
+    if (containerHeight - newMessageHeight <= scrollOffset+1) {
+        $messages.scrollTop = $messages.scrollHeight
+    }
+}
+
 socket.on('message', (msg)=>{
     console.log(msg)
     const html = Mustache.render(messageTemplate, {username:msg.username, message: msg.text, timestamp: moment(msg.createdAt).format('h:mm a')})
     $messages.insertAdjacentHTML('beforeend',html)
+    autoscroll()
 })
 
 socket.on('renderLocation', (loc)=>{
     console.log(loc)
     const html = Mustache.render(locationTemplate, {username:loc.username, location: loc.url, timestamp:  moment(loc.createdAt).format('h:mm a')})
     $messages.insertAdjacentHTML('beforeend',html)
+    autoscroll()
 })
 
 document.querySelector("button").addEventListener('click', ()=>{
-    $sendButton.setAttribute('disabled', 'disabled')
     
     var msg = document.querySelector("input").value;
-
-    socket.emit('sendMessage', msg, (returnMessage) => {
-        $sendButton.removeAttribute('disabled')
-        $messageInput.value=''
-        $messageInput.focus()
-        console.log(returnMessage)
-    })
+    if(msg!=''){
+        $sendButton.setAttribute('disabled', 'disabled')
+        socket.emit('sendMessage', msg, (returnMessage) => {
+            $sendButton.removeAttribute('disabled')
+            $messageInput.value=''
+            $messageInput.focus()
+            console.log(returnMessage)
+        })
+    }
 })
 
 socket.on('roomData', ({room, users}) => {
