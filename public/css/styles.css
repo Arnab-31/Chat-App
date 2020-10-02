@@ -102,8 +102,8 @@ button:disabled {
     height: 100vh;
     color: white;
     background: #333744;
-    width: 325px;
-    overflow-y: scroll
+    overflow-y: scroll;
+    width: 20%;
 }
 
 /* Chat styles */
@@ -114,6 +114,7 @@ button:disabled {
     flex-direction: column;
     max-height: 100vh;
     margin-left: 10px;
+    width: 80%;
 }
 
 .chat__messages {
@@ -192,4 +193,51 @@ button:disabled {
     list-style-type: none;
     font-weight: 300;
     padding: 12px 24px 0 24px;
+}
+
+
+@media only screen and (max-width: 600px) {
+    .chat__sidebar {
+        width: 35%;
+    }
+        
+    .chat__main {
+        width: 65%;
+    }
+
+    .room-title {
+        font-size: 18px;
+    }
+
+    .list-title{
+        font-size: 14px;
+    }
+
+    .users {
+        font-size: 12px;
+    }
+}
+
+
+@media only screen and (max-width: 400px) {
+    .chat__sidebar {
+        width: 65%;
+        padding-right: 100px;
+    }
+        
+    .chat__main {
+        width: 35%;
+    }
+
+    .room-title {
+        font-size: 13px;
+    }
+
+    .list-title{
+        font-size: 11px;
+    }
+
+    .users {
+        font-size: 10px;
+    }
 }
