@@ -4,3 +4,6 @@ Built using node.js and socket.io
 
 See the app in action - https://chat-app-by-arnab-poddar.herokuapp.com/
 
+
+![snap](chat.png)
+
